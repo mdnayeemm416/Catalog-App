@@ -1,11 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:html';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'package:chapter_1/models/catalogs.dart';
 import 'package:chapter_1/widgets/drawer.dart';
 import 'package:chapter_1/widgets/item_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class home_page extends StatefulWidget {
   const home_page({super.key});
@@ -22,7 +25,7 @@ class _home_pageState extends State<home_page> {
   }
 
   loadjson() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     final ItemJson = await rootBundle.loadString('files/item.json');
     final DecodeItem = jsonDecode(ItemJson);
     var itemData = DecodeItem['items'];
@@ -35,48 +38,64 @@ class _home_pageState extends State<home_page> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            drawer: MyDrawer(),
-            appBar: AppBar(
-              title: const Center(child: Text('Flutter App')),
-              backgroundColor: Colors.purpleAccent,
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(20),
-              child: (CataLog.items != null && CataLog.items.isNotEmpty)
-                  ? GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16
-                          ),
-                      itemCount: CataLog.items.length,
-                      itemBuilder: (context, index) {
-                        final item = CataLog.items[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          child: GridTile(
-                              header: Container(
-                                color: Colors.purpleAccent,
-                                height: 25,
-                                child: Center(
-                                  child: Text(
-                                  item.name,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(),
-                                                              ),
-                                ),
-                              ),
-                              footer: Text('${item.price}',textAlign: TextAlign.center,),
-                              child: Image.network(item.image)),
-                        );
-                      })
-                  : Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.purpleAccent,
-                      ),
-                    ),
-            )));
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Color.fromARGB(255, 245, 238, 238),
+        drawer: MyDrawer(),
+        appBar: AppBar(
+          title: Center(child: "CataLog App".text.make()),
+        ),
+        body: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              if (CataLog.items != null && CataLog.items.isNotEmpty)
+                CataLogList().expand()
+              else
+                Center(
+                  child: CircularProgressIndicator(),
+                )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CataLogList extends StatelessWidget {
+  const CataLogList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final product = CataLog.items[index];
+        return catalogItem(product:product);
+      },
+      itemCount: CataLog.items.length,
+    );
+  }
+}
+
+class catalogItem extends StatelessWidget {
+  final Item product;
+
+  const catalogItem({
+    Key? key,
+    required this.product,
+  }) :assert(product != null), super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return VxBox(
+      child: Row(
+        children: [
+          Image.network(product.image).box.p4.rounded.
+          color(Color.fromARGB(255, 245, 238, 238),).make().p12().w32(context)
+        ],
+      )
+    ).square(100).rounded.color(Colors.white)  .make().py16();
   }
 }
