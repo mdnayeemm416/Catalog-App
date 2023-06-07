@@ -72,8 +72,10 @@ class CataLogList extends StatelessWidget {
         final product = CataLog.items[index];
         return InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => 
-              homeDetail(product: product)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => homeDetail(product: product)));
             },
             child: catalogItem(product: product));
       },
@@ -95,9 +97,9 @@ class catalogItem extends StatelessWidget {
     return VxBox(
         child: Row(
       children: [
-        Hero(
-          tag: "key(product.name.toString())",
-          child: CatalogImage(image: product.image)),
+        CatalogImage(
+          image: product.image,
+        ),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
