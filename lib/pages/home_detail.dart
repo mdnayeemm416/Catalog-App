@@ -18,8 +18,16 @@ class homeDetail extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Color.fromARGB(255, 206, 241, 225),
         child: ButtonBar(
-          alignment: MainAxisAlignment.center,
+          alignment: MainAxisAlignment.spaceBetween,
+          buttonPadding: Vx.mOnly(right: 30),
           children: [
+            "\$${product.price}"
+                .text
+                .xl2
+                .bold
+                .color(Color.fromARGB(255, 220, 11, 63))
+                .make()
+                .py20(),
             ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
@@ -38,7 +46,7 @@ class homeDetail extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ).h8(context).w32(context)
+            ).h8(context).w16(context)
           ],
         ),
       ),
@@ -60,13 +68,7 @@ class homeDetail extends StatelessWidget {
                             .textStyle(context.captionStyle)
                             .lg
                             .make(),
-                        "\$${product.price}"
-                            .text
-                            .xl2
-                            .bold
-                            .color(Color.fromARGB(255, 220, 11, 63))
-                            .make()
-                            .py20(),
+                        
                       ],
                     ).py64(),
                   )))

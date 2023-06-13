@@ -1,3 +1,4 @@
+import 'package:chapter_1/pages/cart.dart';
 import 'package:chapter_1/utilits/routes.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
@@ -10,10 +11,12 @@ void main(List<String> args) {
       routes: {
         MyRoute.homepage: (context) => home_page(),
         MyRoute.loginpage: (context) => login_page(),
-        },
+        MyRoute.cart: (context) => cart(),
+      },
       title: 'Flutter Project',
       themeMode: ThemeMode.light,
-      darkTheme: ThemeData(primarySwatch: Colors.red,brightness: Brightness.dark),
+      darkTheme:
+          ThemeData(primarySwatch: Colors.red, brightness: Brightness.dark),
       debugShowCheckedModeBanner: false,
     ),
   );

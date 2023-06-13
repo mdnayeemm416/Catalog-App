@@ -1,16 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:chapter_1/pages/home_detail.dart';
+import 'package:chapter_1/utilits/routes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:chapter_1/models/catalogs.dart';
 import 'package:chapter_1/widgets/drawer.dart';
-import 'package:chapter_1/widgets/item_widget.dart';
 
+// ignore: camel_case_types
 class home_page extends StatefulWidget {
   const home_page({super.key});
 
@@ -18,6 +18,7 @@ class home_page extends StatefulWidget {
   State<home_page> createState() => _home_pageState();
 }
 
+// ignore: camel_case_types
 class _home_pageState extends State<home_page> {
   @override
   void initState() {
@@ -27,7 +28,9 @@ class _home_pageState extends State<home_page> {
 
   loadjson() async {
     await Future.delayed(const Duration(seconds: 1));
+    // ignore: non_constant_identifier_names
     final ItemJson = await rootBundle.loadString('files/item.json');
+    // ignore: non_constant_identifier_names
     final DecodeItem = jsonDecode(ItemJson);
     var itemData = DecodeItem['items'];
     CataLog.items =
@@ -41,18 +44,25 @@ class _home_pageState extends State<home_page> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 245, 238, 238),
-        drawer: MyDrawer(),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black,
+          onPressed: () {
+            Navigator.pushNamed(context, MyRoute.cart);
+          },
+          child: const Icon(CupertinoIcons.cart),
+        ),
+        backgroundColor: const Color.fromARGB(255, 245, 238, 238),
+        drawer: const MyDrawer(),
         appBar: AppBar(
           title: Center(child: "CataLog App".text.make()),
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             if (CataLog.items != null && CataLog.items.isNotEmpty)
-              CataLogList().expand()
+              const CataLogList().expand()
             else
-              CircularProgressIndicator().centered(),
+              const CircularProgressIndicator().centered(),
           ]),
         ),
       ),

@@ -3,6 +3,11 @@ import 'dart:convert';
 
 class CataLog {
   static List<Item> items = [];
+
+  static Item getById(int id) =>
+      items.firstWhere((element) => element.id == id, orElse: null);
+
+  Item getByPosition(int pos) => items[pos];
 }
 
 class Item {
